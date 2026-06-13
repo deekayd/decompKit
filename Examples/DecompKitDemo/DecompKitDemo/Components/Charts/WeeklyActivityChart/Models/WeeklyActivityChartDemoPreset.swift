@@ -4,6 +4,7 @@ import DecompKit
 struct WeeklyActivityChartDemoPreset: Identifiable {
     let id: String
     let title: String
+    let subtitle: String
     let range: ActivityChartRange
     let points: [ActivityChartPoint]
     let comparisonValues: [Double]
@@ -29,14 +30,19 @@ struct WeeklyActivityChartDemoPreset: Identifiable {
     }
 
     static var presets: [WeeklyActivityChartDemoPreset] {
-        ActivityChartRange.allCases.map { range in
-            WeeklyActivityChartDemoPreset(
-                id: range.id,
-                title: "Activity Chart",
-                range: range,
-                points: WeeklyActivityChartSamples.points(for: range),
-                comparisonValues: WeeklyActivityChartSamples.comparisonValues(for: range)
-            )
-        }
+        [.activityChart]
+    }
+
+    private static var activityChart: WeeklyActivityChartDemoPreset {
+        let range = ActivityChartRange.week
+
+        return WeeklyActivityChartDemoPreset(
+            id: "activity-chart",
+            title: "Activity Chart",
+            subtitle: "Интерактивный пример",
+            range: range,
+            points: WeeklyActivityChartSamples.points(for: range),
+            comparisonValues: WeeklyActivityChartSamples.comparisonValues(for: range)
+        )
     }
 }

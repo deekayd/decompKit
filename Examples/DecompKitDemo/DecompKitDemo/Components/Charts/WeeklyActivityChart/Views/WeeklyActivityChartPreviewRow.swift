@@ -14,7 +14,7 @@ struct WeeklyActivityChartPreviewRow: View {
                         .lineLimit(2)
                         .minimumScaleFactor(0.86)
 
-                    Text(preset.range.title)
+                    Text(preset.subtitle)
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
