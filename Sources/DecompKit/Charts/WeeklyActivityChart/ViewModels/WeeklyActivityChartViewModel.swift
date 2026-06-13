@@ -40,7 +40,7 @@ struct WeeklyActivityChartViewModel {
     }
 
     var highlightedIndex: Int? {
-        if let index = configuration.highlightedIndex, points.indices.contains(index) {
+        if let index = configuration.highlightedIndex, series.points.indices.contains(index) {
             return index
         }
 
