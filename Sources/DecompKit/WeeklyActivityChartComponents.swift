@@ -75,8 +75,13 @@ struct TrendBadge: View {
                 Text(percentText)
                     .font(.system(size: WeeklyActivityChartLayout.trendBadgeValueSize, weight: .bold, design: .rounded))
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(WeeklyActivityChartLayout.trendBadgeValueMinimumScale)
+                    .layoutPriority(1)
             }
             .foregroundStyle(tint)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             Text(caption)
                 .font(.system(size: WeeklyActivityChartLayout.trendBadgeCaptionSize, weight: .medium, design: .rounded))

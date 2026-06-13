@@ -27,10 +27,8 @@ enum WeeklyActivityChartLayout {
     static let headerSpacing: CGFloat = 18
     static let headerTitleSize: CGFloat = 28
     static let headerSubtitleSize: CGFloat = 17
-    static let headerChevronSize: CGFloat = 12
     static let headerColumnSpacing: CGFloat = 9
     static let headerTrendSpacing: CGFloat = 12
-    static let headerSubtitleIconSpacing: CGFloat = 8
     static let headerSpacerMinLength: CGFloat = 6
     static let headerTitleMinimumScale: CGFloat = 0.76
     static let plotHeight = WeeklyActivityChartDefaults.plotHeight
@@ -131,8 +129,9 @@ enum WeeklyActivityChartLayout {
     static let trendBadgeCornerRadius: CGFloat = 17
     static let trendBadgeHorizontalPadding: CGFloat = 14
     static let trendBadgeVerticalPadding: CGFloat = 12
-    static let trendBadgeIconSize: CGFloat = 19
-    static let trendBadgeValueSize: CGFloat = 21
+    static let trendBadgeIconSize: CGFloat = 16
+    static let trendBadgeValueSize: CGFloat = 18
+    static let trendBadgeValueMinimumScale: CGFloat = 0.78
     static let trendBadgeCaptionSize: CGFloat = 12
     static let trendBadgeSpacing: CGFloat = 5
     static let trendBadgeValueSpacing: CGFloat = 6

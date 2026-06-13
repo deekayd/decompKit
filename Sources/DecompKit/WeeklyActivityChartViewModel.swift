@@ -1,11 +1,30 @@
-import Foundation
+import SwiftUI
 
 struct WeeklyActivityChartViewModel {
     let series: ActivityChartSeries
     let configuration: ActivityChartConfiguration
 
     var points: [ActivityChartPoint] {
-        series.points
+        let colors = configuration.colorMode.pointColors(
+            for: series.points,
+            highlightedIndex: highlightedIndex,
+            maxValue: maxValue
+        )
+
+        return series.points.enumerated().map { index, point in
+            var coloredPoint = point
+            if colors.indices.contains(index) {
+                coloredPoint.tint = colors[index]
+            }
+            return coloredPoint
+        }
+    }
+
+    var lineColors: [Color] {
+        configuration.colorMode.lineColors(
+            for: series.points,
+            maxValue: maxValue
+        )
     }
 
     var title: String {
@@ -17,7 +36,7 @@ struct WeeklyActivityChartViewModel {
     }
 
     var maxValue: Double {
-        max(configuration.maxValue ?? points.map(\.value).max() ?? WeeklyActivityChartDefaults.maxValue, 1)
+        max(configuration.maxValue ?? series.points.map(\.value).max() ?? WeeklyActivityChartDefaults.maxValue, 1)
     }
 
     var highlightedIndex: Int? {

@@ -25,7 +25,7 @@ struct ActivityChartPlot: View {
             let extendedCoordinates = makeExtendedCoordinates(from: coordinates, edgeCoordinates: edgeCoordinates)
             let areaCoordinates = makeAreaCoordinates(from: extendedCoordinates, baseline: plot.rect.maxY)
             let canvasWidth = max(1, geometry.size.width)
-            let gradientColors = points.map(\.tint)
+            let gradientColors = viewModel.lineColors
 
             ZStack {
                 grid(in: plot)
@@ -189,6 +189,16 @@ struct ActivityChartPlot: View {
         }
 
         guard colors.count > 1, coordinates.count == colors.count else {
+            if colors.count > 1 {
+                return edgeAwarePaletteGradient(
+                    colors: colors,
+                    opacity: opacity,
+                    coordinates: coordinates,
+                    edgeCoordinates: edgeCoordinates,
+                    canvasWidth: canvasWidth
+                )
+            }
+
             return LinearGradient(
                 colors: [colors[0].opacity(0), colors[0].opacity(opacity), colors[0].opacity(0)],
                 startPoint: .leading,
@@ -262,6 +272,57 @@ struct ActivityChartPlot: View {
                 )
             )
         }
+
+        return LinearGradient(
+            stops: stops,
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+    }
+
+    private func edgeAwarePaletteGradient(
+        colors: [Color],
+        opacity: Double,
+        coordinates: [CGPoint],
+        edgeCoordinates: (left: [CGPoint]?, right: [CGPoint]?),
+        canvasWidth: CGFloat
+    ) -> LinearGradient {
+        guard let firstX = coordinates.first?.x,
+              let lastX = coordinates.last?.x else {
+            return LinearGradient(
+                colors: colors.map { $0.opacity(opacity) },
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        }
+
+        let startX = edgeCoordinates.left?.first?.x ?? firstX
+        let endX = edgeCoordinates.right?.last?.x ?? lastX
+        let colorRange = max(1, colors.count - 1)
+        var stops: [Gradient.Stop] = [
+            Gradient.Stop(
+                color: colors[0].opacity(0),
+                location: gradientLocation(for: startX, canvasWidth: canvasWidth)
+            )
+        ]
+
+        for (index, color) in colors.enumerated() {
+            let progress = CGFloat(index) / CGFloat(colorRange)
+            let x = firstX + (lastX - firstX) * progress
+            stops.append(
+                Gradient.Stop(
+                    color: color.opacity(opacity),
+                    location: gradientLocation(for: x, canvasWidth: canvasWidth)
+                )
+            )
+        }
+
+        stops.append(
+            Gradient.Stop(
+                color: colors[colors.count - 1].opacity(0),
+                location: gradientLocation(for: endX, canvasWidth: canvasWidth)
+            )
+        )
 
         return LinearGradient(
             stops: stops,

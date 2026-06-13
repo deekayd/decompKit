@@ -123,15 +123,9 @@ public struct WeeklyActivityChartCard: View {
                     .lineLimit(2)
                     .minimumScaleFactor(WeeklyActivityChartLayout.headerTitleMinimumScale)
 
-                HStack(spacing: WeeklyActivityChartLayout.headerSubtitleIconSpacing) {
-                    Text(viewModel.subtitle)
-                        .font(.system(size: WeeklyActivityChartLayout.headerSubtitleSize, weight: .medium, design: .rounded))
-                        .foregroundStyle(viewModel.configuration.style.secondaryTextColor)
-
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: WeeklyActivityChartLayout.headerChevronSize, weight: .bold))
-                        .foregroundStyle(viewModel.configuration.style.secondaryTextColor)
-                }
+                Text(viewModel.subtitle)
+                    .font(.system(size: WeeklyActivityChartLayout.headerSubtitleSize, weight: .medium, design: .rounded))
+                    .foregroundStyle(viewModel.configuration.style.secondaryTextColor)
             }
 
             Spacer(minLength: WeeklyActivityChartLayout.headerSpacerMinLength)
