@@ -34,9 +34,7 @@ WeeklyActivityChartSamples.swift
 
 ## Requirements
 
-- iOS 16+
-- macOS 13+
-- tvOS 16+
+- iOS 18+
 - Swift 6.0+
 
 ## Installation
@@ -157,13 +155,24 @@ ActivityChartConfiguration(
     highlightBadgeSpacing: 36,
     plotHeight: 320,
     showsHeader: true,
-    style: style
+    style: style,
+    colorMode: .spectrum
 )
+```
+
+Chart color modes:
+
+```swift
+ActivityChartConfiguration(colorMode: .source)   // colors from points
+ActivityChartConfiguration(colorMode: .focused)  // monotone line, highlighted point stands out
+ActivityChartConfiguration(colorMode: .ocean)    // two-tone chart
+ActivityChartConfiguration(colorMode: .spectrum) // multi-color gradient
+ActivityChartConfiguration(colorMode: .status)   // semantic low / medium / high colors
 ```
 
 ## Demo App
 
-The example app is a component gallery. It shows a scrollable list of chart previews; tapping a row opens a full chart with controls for range, theme, plot height, highlighted point, highlight badge spacing, header visibility, highlighted point visibility, and randomized data.
+The example app starts with a component list. Open `Графики` to see chart previews; tapping a preview opens a full chart with controls for range, theme, chart color mode, plot height, highlighted point, highlight badge spacing, header visibility, highlighted point visibility, and randomized data.
 
 ## Roadmap
 
