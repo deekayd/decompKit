@@ -5,18 +5,32 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                NavigationLink {
-                    ChartGalleryView(
-                        viewModel: viewModel.makeChartGalleryViewModel()
-                    )
-                } label: {
-                    Label(viewModel.chartTitle, systemImage: viewModel.chartSymbolName)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 14) {
+                    chartLink
                 }
+                .padding(.horizontal, 20)
+                .padding(.top, 18)
+                .padding(.bottom, 28)
             }
-            .listStyle(.insetGrouped)
+            .background(Color(.systemBackground))
             .navigationTitle("UI Components")
         }
+    }
+
+    private var chartLink: some View {
+        NavigationLink {
+            ChartGalleryView(
+                viewModel: viewModel.makeChartGalleryViewModel()
+            )
+        } label: {
+            ComponentCatalogCard(
+                title: viewModel.chartTitle,
+                subtitle: viewModel.chartSubtitle,
+                symbolName: viewModel.chartSymbolName
+            )
+        }
+        .buttonStyle(.plain)
     }
 }
 
