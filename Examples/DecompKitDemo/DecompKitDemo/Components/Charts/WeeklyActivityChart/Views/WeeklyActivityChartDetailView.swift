@@ -9,20 +9,34 @@ struct WeeklyActivityChartDetailView: View {
     }
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 18) {
-                WeeklyActivityChartCard(
-                    series: viewModel.series,
-                    configuration: viewModel.configuration
-                )
+        VStack(spacing: 0) {
+            stickyChart
 
+            ScrollView(showsIndicators: false) {
                 controls
+                    .padding(.horizontal, 18)
+                    .padding(.top, 16)
+                    .padding(.bottom, 28)
             }
-            .padding(18)
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemBackground))
+    }
+
+    private var stickyChart: some View {
+        WeeklyActivityChartCard(
+            series: viewModel.series,
+            configuration: viewModel.configuration
+        )
+        .padding(.horizontal, 18)
+        .padding(.top, 12)
+        .padding(.bottom, 14)
+        .background(
+            Color(.systemBackground)
+                .shadow(color: Color.black.opacity(0.08), radius: 14, x: 0, y: 8)
+        )
+        .zIndex(1)
     }
 
     private var controls: some View {
