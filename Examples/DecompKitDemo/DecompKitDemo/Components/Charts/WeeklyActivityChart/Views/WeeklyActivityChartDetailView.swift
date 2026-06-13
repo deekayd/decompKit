@@ -74,13 +74,7 @@ struct WeeklyActivityChartDetailView: View {
             }
             .pickerStyle(.segmented)
 
-            Picker("Chart colors", selection: $viewModel.colorMode) {
-                ForEach(WeeklyActivityChartDemoColorMode.allCases) { colorMode in
-                    Label(colorMode.title, systemImage: colorMode.symbolName)
-                        .tag(colorMode)
-                }
-            }
-            .pickerStyle(.menu)
+            WeeklyActivityChartColorModePicker(selection: $viewModel.colorMode)
 
             Button {
                 viewModel.randomizeData()
