@@ -15,7 +15,6 @@ final class WeeklyActivityChartDetailViewModel: ObservableObject {
     @Published var highlightedPointIndex: Int
     @Published var showsHighlight = true
     @Published var showsHeader = true
-    @Published var selectedConfigurationTab = WeeklyActivityChartConfigurationTab.data
 
     @Published var range: ActivityChartRange {
         didSet {

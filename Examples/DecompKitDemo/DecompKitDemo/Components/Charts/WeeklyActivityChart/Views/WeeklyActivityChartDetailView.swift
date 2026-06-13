@@ -40,18 +40,25 @@ struct WeeklyActivityChartDetailView: View {
     }
 
     private var controls: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 18) {
             Text("Configuration")
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
 
-            Picker("Configuration section", selection: $viewModel.selectedConfigurationTab) {
-                ForEach(WeeklyActivityChartConfigurationTab.allCases) { tab in
-                    Text(tab.title).tag(tab)
-                }
+            configurationSection("Data") {
+                dataControls
             }
-            .pickerStyle(.segmented)
 
-            configurationTabContent
+            configurationSection("Appearance") {
+                appearanceControls
+            }
+
+            configurationSection("Layout") {
+                layoutControls
+            }
+
+            configurationSection("Display") {
+                visibilityControls
+            }
         }
         .padding(18)
         .background(
@@ -60,15 +67,22 @@ struct WeeklyActivityChartDetailView: View {
         )
     }
 
-    @ViewBuilder
-    private var configurationTabContent: some View {
-        switch viewModel.selectedConfigurationTab {
-        case .data:
-            dataControls
-        case .layout:
-            layoutControls
-        case .visibility:
-            visibilityControls
+    private func configurationSection<Content: View>(
+        _ title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+
+            content()
+
+            if title != "Display" {
+                Divider()
+                    .padding(.top, 4)
+            }
         }
     }
 
@@ -81,6 +95,28 @@ struct WeeklyActivityChartDetailView: View {
             }
             .pickerStyle(.segmented)
 
+            Button {
+                viewModel.randomizeData()
+            } label: {
+                Label("Randomize data", systemImage: "shuffle")
+                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                    .frame(maxWidth: .infinity, minHeight: 54)
+            }
+            .foregroundStyle(Color.accentColor)
+            .background(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(Color.accentColor.opacity(0.13))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(Color.accentColor.opacity(0.22), lineWidth: 1)
+            )
+            .buttonStyle(.plain)
+        }
+    }
+
+    private var appearanceControls: some View {
+        VStack(alignment: .leading, spacing: 16) {
             Picker("Theme", selection: $viewModel.theme) {
                 ForEach(WeeklyActivityChartDemoTheme.allCases) { theme in
                     Text(theme.title).tag(theme)
@@ -89,16 +125,7 @@ struct WeeklyActivityChartDetailView: View {
             .pickerStyle(.segmented)
 
             WeeklyActivityChartColorModePicker(selection: $viewModel.colorMode)
-
-            Button {
-                viewModel.randomizeData()
-            } label: {
-                Label("Randomize data", systemImage: "shuffle")
-                    .frame(maxWidth: .infinity)
-            }
-            .buttonStyle(.borderedProminent)
         }
-        .padding(.top, 2)
     }
 
     private var layoutControls: some View {
@@ -145,7 +172,6 @@ struct WeeklyActivityChartDetailView: View {
                 )
             }
         }
-        .padding(.top, 2)
     }
 
     private var visibilityControls: some View {
@@ -153,6 +179,5 @@ struct WeeklyActivityChartDetailView: View {
             Toggle("Show highlight badge", isOn: $viewModel.showsHighlight)
             Toggle("Show chart header", isOn: $viewModel.showsHeader)
         }
-        .padding(.top, 6)
     }
 }
