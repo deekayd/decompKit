@@ -5,9 +5,7 @@ import PackageDescription
 let package = Package(
     name: "DecompKit",
     platforms: [
-        .iOS(.v16),
-        .macOS(.v13),
-        .tvOS(.v16)
+        .iOS(.v18)
     ],
     products: [
         .library(
