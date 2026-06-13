@@ -1,4 +1,4 @@
-enum DemoConfigurationTab: String, CaseIterable, Identifiable {
+enum WeeklyActivityChartConfigurationTab: String, CaseIterable, Identifiable {
     case data
     case layout
     case visibility

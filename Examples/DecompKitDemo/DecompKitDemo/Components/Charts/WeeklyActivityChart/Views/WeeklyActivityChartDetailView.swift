@@ -1,10 +1,10 @@
 import SwiftUI
 import DecompKit
 
-struct ChartDetailView: View {
-    @StateObject private var viewModel: ChartDetailViewModel
+struct WeeklyActivityChartDetailView: View {
+    @StateObject private var viewModel: WeeklyActivityChartDetailViewModel
 
-    init(viewModel: ChartDetailViewModel) {
+    init(viewModel: WeeklyActivityChartDetailViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -31,7 +31,7 @@ struct ChartDetailView: View {
                 .font(.system(size: 18, weight: .semibold, design: .rounded))
 
             Picker("Configuration section", selection: $viewModel.selectedConfigurationTab) {
-                ForEach(DemoConfigurationTab.allCases) { tab in
+                ForEach(WeeklyActivityChartConfigurationTab.allCases) { tab in
                     Text(tab.title).tag(tab)
                 }
             }
@@ -68,14 +68,14 @@ struct ChartDetailView: View {
             .pickerStyle(.segmented)
 
             Picker("Theme", selection: $viewModel.theme) {
-                ForEach(DemoChartTheme.allCases) { theme in
+                ForEach(WeeklyActivityChartDemoTheme.allCases) { theme in
                     Text(theme.title).tag(theme)
                 }
             }
             .pickerStyle(.segmented)
 
             Picker("Chart colors", selection: $viewModel.colorMode) {
-                ForEach(DemoChartColorMode.allCases) { colorMode in
+                ForEach(WeeklyActivityChartDemoColorMode.allCases) { colorMode in
                     Label(colorMode.title, systemImage: colorMode.symbolName)
                         .tag(colorMode)
                 }
@@ -115,7 +115,7 @@ struct ChartDetailView: View {
 
                 Slider(
                     value: $viewModel.highlightBadgeSpacing,
-                    in: DemoControls.highlightSpacingRange,
+                    in: WeeklyActivityChartDemoControls.highlightSpacingRange,
                     step: 1
                 )
             }
@@ -132,7 +132,7 @@ struct ChartDetailView: View {
 
                 Slider(
                     value: $viewModel.plotHeight,
-                    in: DemoControls.plotHeightRange,
+                    in: WeeklyActivityChartDemoControls.plotHeightRange,
                     step: 1
                 )
             }

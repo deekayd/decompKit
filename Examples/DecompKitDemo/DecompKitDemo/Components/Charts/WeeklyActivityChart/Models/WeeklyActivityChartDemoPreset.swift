@@ -1,7 +1,7 @@
 import SwiftUI
 import DecompKit
 
-struct DemoChartPreset: Identifiable {
+struct WeeklyActivityChartDemoPreset: Identifiable {
     let id: String
     let title: String
     let range: ActivityChartRange
@@ -28,9 +28,9 @@ struct DemoChartPreset: Identifiable {
         )
     }
 
-    static var presets: [DemoChartPreset] {
+    static var presets: [WeeklyActivityChartDemoPreset] {
         ActivityChartRange.allCases.map { range in
-            DemoChartPreset(
+            WeeklyActivityChartDemoPreset(
                 id: range.id,
                 title: "Activity Chart",
                 range: range,

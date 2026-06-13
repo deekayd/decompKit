@@ -1,6 +1,6 @@
 import DecompKit
 
-enum DemoChartColorMode: String, CaseIterable, Identifiable {
+enum WeeklyActivityChartDemoColorMode: String, CaseIterable, Identifiable {
     case original
     case monotone
     case twoTone

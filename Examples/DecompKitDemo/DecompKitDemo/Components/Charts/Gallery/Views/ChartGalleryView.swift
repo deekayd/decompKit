@@ -8,11 +8,11 @@ struct ChartGalleryView: View {
             LazyVStack(spacing: 16) {
                 ForEach(viewModel.presets) { preset in
                     NavigationLink {
-                        ChartDetailView(
+                        WeeklyActivityChartDetailView(
                             viewModel: viewModel.makeDetailViewModel(for: preset)
                         )
                     } label: {
-                        DemoChartPreviewRow(preset: preset)
+                        WeeklyActivityChartPreviewRow(preset: preset)
                     }
                     .buttonStyle(.plain)
                 }

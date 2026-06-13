@@ -6,6 +6,6 @@ final class ComponentCatalogViewModel {
     let chartSymbolName = "chart.xyaxis.line"
 
     func makeChartGalleryViewModel() -> ChartGalleryViewModel {
-        ChartGalleryViewModel(presets: DemoChartPreset.presets)
+        ChartGalleryViewModel(presets: WeeklyActivityChartDemoPreset.presets)
     }
 }

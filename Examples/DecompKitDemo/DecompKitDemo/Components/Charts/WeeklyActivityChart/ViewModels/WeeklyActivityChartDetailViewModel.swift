@@ -3,11 +3,11 @@ import DecompKit
 import Combine
 
 @MainActor
-final class ChartDetailViewModel: ObservableObject {
-    let preset: DemoChartPreset
+final class WeeklyActivityChartDetailViewModel: ObservableObject {
+    let preset: WeeklyActivityChartDemoPreset
 
-    @Published var theme = DemoChartTheme.neon
-    @Published var colorMode = DemoChartColorMode.original
+    @Published var theme = WeeklyActivityChartDemoTheme.neon
+    @Published var colorMode = WeeklyActivityChartDemoColorMode.original
     @Published var points: [ActivityChartPoint]
     @Published var comparisonValues: [Double]
     @Published var highlightBadgeSpacing = WeeklyActivityChartDefaults.highlightBadgeSpacing
@@ -15,7 +15,7 @@ final class ChartDetailViewModel: ObservableObject {
     @Published var highlightedPointIndex: Int
     @Published var showsHighlight = true
     @Published var showsHeader = true
-    @Published var selectedConfigurationTab = DemoConfigurationTab.data
+    @Published var selectedConfigurationTab = WeeklyActivityChartConfigurationTab.data
 
     @Published var range: ActivityChartRange {
         didSet {
@@ -23,13 +23,13 @@ final class ChartDetailViewModel: ObservableObject {
         }
     }
 
-    init(preset: DemoChartPreset) {
+    init(preset: WeeklyActivityChartDemoPreset) {
         self.preset = preset
         self.range = preset.range
         self.points = preset.points
         self.comparisonValues = preset.comparisonValues
         self.highlightedPointIndex = min(
-            DemoControls.defaultHighlightedIndex,
+            WeeklyActivityChartDemoControls.defaultHighlightedIndex,
             max(0, preset.points.count - 1)
         )
     }

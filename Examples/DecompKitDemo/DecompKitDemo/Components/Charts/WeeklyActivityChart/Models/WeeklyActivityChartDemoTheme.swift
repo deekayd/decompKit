@@ -1,6 +1,6 @@
 import DecompKit
 
-enum DemoChartTheme: String, CaseIterable, Identifiable {
+enum WeeklyActivityChartDemoTheme: String, CaseIterable, Identifiable {
     case neon
     case aurora
     case graphite

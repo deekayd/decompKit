@@ -1,8 +1,8 @@
 import SwiftUI
 import DecompKit
 
-struct DemoChartPreviewRow: View {
-    let preset: DemoChartPreset
+struct WeeklyActivityChartPreviewRow: View {
+    let preset: WeeklyActivityChartDemoPreset
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
