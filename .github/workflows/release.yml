@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Existing release tag, for example v0.1.0"
+        description: "Release tag to create or publish, for example v0.1.0"
         required: true
         type: string
 
@@ -29,9 +29,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+          ref: ${{ github.ref }}
 
-      - name: Validate release tag
+      - name: Prepare release tag
         id: tag
         shell: bash
         run: |
@@ -42,9 +42,16 @@ jobs:
             exit 1
           fi
 
-          if ! git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
-            echo "Tag $tag does not exist in this repository."
-            exit 1
+          git fetch --tags --force origin
+
+          if git rev-parse --verify --quiet "refs/tags/$tag" >/dev/null; then
+            echo "tag_exists=true" >> "$GITHUB_OUTPUT"
+
+            if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+              git checkout --detach "$tag"
+            fi
+          else
+            echo "tag_exists=false" >> "$GITHUB_OUTPUT"
           fi
 
           if [[ "$tag" == *-* ]]; then
@@ -70,11 +77,25 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             build
 
+      - name: Create release tag
+        if: github.event_name == 'workflow_dispatch' && steps.tag.outputs.tag_exists == 'false'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.tag.outputs.tag }}" -m "${{ steps.tag.outputs.tag }}"
+          git push origin "refs/tags/${{ steps.tag.outputs.tag }}"
+
       - name: Create release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
+          if gh release view "${{ steps.tag.outputs.tag }}" >/dev/null 2>&1; then
+            echo "Release ${{ steps.tag.outputs.tag }} already exists."
+            exit 0
+          fi
+
           args=(
             release create "${{ steps.tag.outputs.tag }}"
             --title "${{ steps.tag.outputs.tag }}"

@@ -30,12 +30,24 @@ Swift Package consumers still reference versions without the `v` prefix:
 1. Make sure `main` is green in GitHub Actions.
 2. Move relevant notes from `CHANGELOG.md` > `Unreleased` into a new version section.
 3. Open and merge a release prep PR if the changelog changed.
-4. Pull the latest `main`.
-5. Create an annotated tag.
-6. Push the tag.
-7. Confirm that the `Release` workflow created a GitHub Release.
+4. Run the `Release` workflow from GitHub Actions or create and push the tag locally.
+5. Confirm that the `Release` workflow created a GitHub Release.
 
-## Commands
+## GitHub UI
+
+1. Open `Actions` > `Release`.
+2. Click `Run workflow`.
+3. Select `Branch: main`.
+4. Enter a tag like `v0.1.0`.
+5. Click `Run workflow`.
+
+The workflow validates the tag, builds `DecompKitDemo` in Release configuration, creates the tag if needed, and creates a GitHub Release with generated notes.
+
+If a tag ruleset restricts creation of `v*` tags, allow the GitHub Actions app to bypass that tag ruleset, or create the tag manually as an allowed maintainer.
+
+## Local Commands
+
+You can also create a release by pushing a tag from the command line:
 
 ```bash
 git checkout main
@@ -43,8 +55,6 @@ git pull --ff-only origin main
 git tag -a v0.1.0 -m "v0.1.0"
 git push origin v0.1.0
 ```
-
-The `Release` workflow validates the tag, builds `DecompKitDemo` in Release configuration, and creates a GitHub Release with generated notes.
 
 For a prerelease:
 
