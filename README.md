@@ -174,6 +174,10 @@ ActivityChartConfiguration(colorMode: .status)   // semantic low / medium / high
 
 The example app starts with a component list. Open `Графики` to see chart previews; tapping a preview opens a full chart with controls for range, theme, chart color mode, plot height, highlighted point, highlight badge spacing, header visibility, highlighted point visibility, and randomized data.
 
+## Releases
+
+Releases are published from semantic Git tags like `v0.1.0`. See [RELEASING.md](RELEASING.md) for the release checklist and commands.
+
 ## Roadmap
 
 - More chart variants: rings, radial progress, compact sparklines.
