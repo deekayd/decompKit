@@ -3,10 +3,10 @@ import Foundation
 @MainActor
 final class ComponentCatalogViewModel {
     let chartTitle = "Графики"
-    let chartSubtitle = "WeeklyActivityChart"
+    let chartSubtitle = "Activity, break-even"
     let chartSymbolName = "chart.xyaxis.line"
 
     func makeChartGalleryViewModel() -> ChartGalleryViewModel {
-        ChartGalleryViewModel(presets: WeeklyActivityChartDemoPreset.presets)
+        ChartGalleryViewModel(items: ChartDemoItem.all)
     }
 }

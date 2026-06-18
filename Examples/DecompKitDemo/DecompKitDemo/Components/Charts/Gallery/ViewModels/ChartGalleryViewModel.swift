@@ -2,13 +2,17 @@ import Foundation
 
 @MainActor
 final class ChartGalleryViewModel {
-    let presets: [WeeklyActivityChartDemoPreset]
+    let items: [ChartDemoItem]
 
-    init(presets: [WeeklyActivityChartDemoPreset]) {
-        self.presets = presets
+    init(items: [ChartDemoItem]) {
+        self.items = items
     }
 
     func makeDetailViewModel(for preset: WeeklyActivityChartDemoPreset) -> WeeklyActivityChartDetailViewModel {
         WeeklyActivityChartDetailViewModel(preset: preset)
+    }
+
+    func makeDetailViewModel(for preset: BreakEvenChartDemoPreset) -> BreakEvenChartDetailViewModel {
+        BreakEvenChartDetailViewModel(preset: preset)
     }
 }

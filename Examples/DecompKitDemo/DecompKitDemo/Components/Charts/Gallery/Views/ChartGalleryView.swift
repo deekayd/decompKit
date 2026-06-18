@@ -6,13 +6,11 @@ struct ChartGalleryView: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(viewModel.presets) { preset in
+                ForEach(viewModel.items) { item in
                     NavigationLink {
-                        WeeklyActivityChartDetailView(
-                            viewModel: viewModel.makeDetailViewModel(for: preset)
-                        )
+                        destination(for: item)
                     } label: {
-                        WeeklyActivityChartPreviewRow(preset: preset)
+                        preview(for: item)
                     }
                     .buttonStyle(.plain)
                 }
@@ -21,5 +19,29 @@ struct ChartGalleryView: View {
         }
         .navigationTitle("Графики")
         .background(Color(.systemBackground))
+    }
+
+    @ViewBuilder
+    private func destination(for item: ChartDemoItem) -> some View {
+        switch item {
+        case let .weeklyActivity(preset):
+            WeeklyActivityChartDetailView(
+                viewModel: viewModel.makeDetailViewModel(for: preset)
+            )
+        case let .breakEven(preset):
+            BreakEvenChartDetailView(
+                viewModel: viewModel.makeDetailViewModel(for: preset)
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func preview(for item: ChartDemoItem) -> some View {
+        switch item {
+        case let .weeklyActivity(preset):
+            WeeklyActivityChartPreviewRow(preset: preset)
+        case let .breakEven(preset):
+            BreakEvenChartPreviewRow(preset: preset)
+        }
     }
 }
