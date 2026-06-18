@@ -8,6 +8,7 @@ final class BreakEvenChartDetailViewModel: ObservableObject {
     let preset: BreakEvenChartDemoPreset
 
     @Published var theme = BreakEvenChartDemoTheme.neon
+    @Published var colorMode = BreakEvenChartDemoColorMode.original
     @Published var fixedCost: Double
     @Published var variableCostPerUnit: Double
     @Published var revenuePerUnit: Double
@@ -58,7 +59,7 @@ final class BreakEvenChartDetailViewModel: ObservableObject {
             showsBreakEvenGuides: showsBreakEvenGuides,
             valueFormat: .compactCurrency(code: "USD"),
             unitsFormat: .compactNumber(suffix: "units"),
-            style: theme.style
+            style: colorMode.style(from: theme.style)
         )
     }
 

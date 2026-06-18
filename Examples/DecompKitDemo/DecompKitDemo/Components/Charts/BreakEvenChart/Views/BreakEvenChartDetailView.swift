@@ -9,34 +9,25 @@ struct BreakEvenChartDetailView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            stickyChart
-
-            ScrollView(showsIndicators: false) {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 16) {
+                chartPreview
                 controls
-                    .padding(.horizontal, 18)
-                    .padding(.top, 16)
-                    .padding(.bottom, 28)
             }
+            .padding(.horizontal, 18)
+            .padding(.top, 12)
+            .padding(.bottom, 28)
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(.systemBackground))
     }
 
-    private var stickyChart: some View {
+    private var chartPreview: some View {
         BreakEvenChartCard(
             series: viewModel.series,
             configuration: viewModel.configuration
         )
-        .padding(.horizontal, 18)
-        .padding(.top, 12)
-        .padding(.bottom, 14)
-        .background(
-            Color(.systemBackground)
-                .shadow(color: Color.black.opacity(0.08), radius: 14, x: 0, y: 8)
-        )
-        .zIndex(1)
     }
 
     private var controls: some View {
@@ -141,12 +132,16 @@ struct BreakEvenChartDetailView: View {
     }
 
     private var appearanceControls: some View {
-        Picker("Theme", selection: $viewModel.theme) {
-            ForEach(BreakEvenChartDemoTheme.allCases) { theme in
-                Text(theme.title).tag(theme)
+        VStack(alignment: .leading, spacing: 16) {
+            Picker("Theme", selection: $viewModel.theme) {
+                ForEach(BreakEvenChartDemoTheme.allCases) { theme in
+                    Text(theme.title).tag(theme)
+                }
             }
+            .pickerStyle(.segmented)
+
+            BreakEvenChartColorModePicker(selection: $viewModel.colorMode)
         }
-        .pickerStyle(.segmented)
     }
 
     private var layoutControls: some View {
